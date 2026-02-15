@@ -24,10 +24,8 @@ RUN install-php-extensions \
     zip
 
 
-RUN yes | pecl install ${XDEBUG_VERSION} \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
+RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.start_with_request=trigger" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 
 # Composer
@@ -38,4 +36,6 @@ RUN wget https://get.symfony.com/cli/installer -O - | bash \
     && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
 # Working directory
-WORKDIR /workspace
+WORKDIR /app
+
+ENTRYPOINT ["symfony", "server:start", "--no-tls", "--allow-http","--allow-all-ip", "--port=8000"]
