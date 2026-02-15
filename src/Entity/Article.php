@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\Uuid;
+use \DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
-#[ApiResource]
+#[ORM\HasLifecycleCallbacks]
 class Article
 {
     #[ORM\Id]
@@ -17,16 +16,16 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private string $name;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    #[ORM\Column(name: "created_at")]
+    private ?DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    #[ORM\Column(name: "updated_at")]
+    private ?DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column]
-    private ?bool $booked = null;
+    #[ORM\Column(type: "boolean", options: ["default" => "false"])]
+    private bool $booked = false;
 
     public function getId(): ?int
     {
@@ -47,29 +46,33 @@ class Article
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
     {
-        $this->created_at = $created_at;
+        $now = new DateTimeImmutable();
 
-        return $this;
+        if ($this->createdAt === null) {
+            $this->createdAt = $now;
+        }
+
+        $this->updatedAt = $now;
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
-    {
-        $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function isBooked(): ?bool
+    public function isBooked(): bool
     {
         return $this->booked;
     }
@@ -77,13 +80,6 @@ class Article
     public function setBooked(bool $booked): static
     {
         $this->booked = $booked;
-
-        return $this;
-    }
-
-    public function setId(Uuid $id): static
-    {
-        $this->id = $id;
 
         return $this;
     }
