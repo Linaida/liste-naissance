@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration | Articles{% endblock %}
+
+{% block body %}
+
+<table>
+<thead>
+    <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Réservé</th>
+    </tr>    
+</thead>
+<tbody>
+    {% for article in articles %}
+    <tr>
+        <td>{{ article.id }}</td>
+        <td>{{ article.name }}</td>
+        <td>{{ article.reserved ? 'Oui' : 'Non' }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</div>
+{% endblock %}
