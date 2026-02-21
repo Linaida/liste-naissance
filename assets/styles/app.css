@@ -113,12 +113,12 @@
 }
 
 @layer base {
-    * {
-        @apply border-border outline-ring/50;
-    }
-    body {
-        @apply bg-background text-foreground;
-    }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply text-foreground; /* <-- enlève bg-background */
+  }
 }
 
 @keyframes floatSlow {
@@ -136,13 +136,16 @@
 }
 
 .bg-clouds {
-  /* image + un léger voile pastel par-dessus */
+  background-color: #fff; /* fallback */
   background-image:
-    linear-gradient(135deg, rgba(255, 220, 235, 0.55), rgba(210, 235, 255, 0.55), rgba(210, 255, 235, 0.55)),
+    linear-gradient(135deg,
+      rgba(255, 220, 235, 0.55),
+      rgba(210, 235, 255, 0.55),
+      rgba(210, 255, 235, 0.55)
+    ),
     url("../img/nuage.png");
-
-  background-repeat: no-repeat, no-repeat;
-  background-size: cover, cover;
-  background-position: center, center;
-  background-attachment: fixed; /* optionnel */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
