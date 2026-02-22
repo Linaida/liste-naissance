@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration | Nouvel article
+{% endblock %}
+
+{% block body %}
+
+	<div class="container flex items-center justify-center ">
+	
+		{{ form_start(form)}}
+		{% include 'article/_form.html.twig' %}
+		{{ form_end(form) }}
+		
+	</div>
+
+{% endblock %}

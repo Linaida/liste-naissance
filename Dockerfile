@@ -14,6 +14,12 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Node.js 20 LTS
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && node -v \
+    && npm -v
+
 # PHP Extensions
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions \
@@ -38,4 +44,4 @@ RUN wget https://get.symfony.com/cli/installer -O - | bash \
 # Working directory
 WORKDIR /app
 
-ENTRYPOINT ["symfony", "server:start", "--no-tls", "--allow-http","--allow-all-ip", "--port=8000"]
+CMD ["symfony", "server:start", "--no-tls", "--allow-http","--allow-all-ip", "--port=8000"]

@@ -4,18 +4,41 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use App\Form\Type\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 final class ArticleController extends AbstractController
 {
-    #[Route('/administration/articles', name: 'admin_articles_index')]
-    public function adminArticles(ArticleRepository $articleRepository): Response
+    public function __construct(private ArticleRepository $articleRepository) {}
+
+    #[Route('/articles', name: 'articles_list', methods: ['GET'])]
+    public function listArticles(): Response
     {
-        return $this->render('administration/article/index.html.twig', [
+        return $this->render('article/index.html.twig', [
             'controller_name' => 'ArticleController',
-            'articles' => $articleRepository->findAll(),
+            'articles' => $this->articleRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/articles/new', name: 'articles_new', methods: ['GET', 'POST'])]
+    public function newArticle(Request $request): Response
+    {
+        $form = $this->createForm(ArticleType::class, new Article());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article = $form->getData();
+            // Save the article to the database
+            $this->articleRepository->save($article, true);
+
+            return $this->redirectToRoute('articles_list');
+        }
+
+        return $this->render('article/new.html.twig', [
+            'form' => $form,
         ]);
     }
 
