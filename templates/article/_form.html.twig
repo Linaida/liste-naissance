@@ -1,45 +1,107 @@
-<div class="w-full max-w-md">
-	<div class="p-8 flex flex-col w-96 h-full text-gray-700 bg-pink-50 shadow-xl rounded-3xl border border-pink-100 mt-10 ">
-		<h2 class="text-2xl font-semibold text-center text-gray-800 mb-8">Ajouter un article  💕</h2>
-		<div class="mb-8">
-			<!-- Full Name -->
-			<div class="flex flex-col ">
+<div class="w-full max-w-md mx-auto mt-20">
+	<div class="
+			        p-10
+			        flex flex-col
+			        text-gray-700
+			        bg-pink-50/95
+			        backdrop-blur-md
+			        shadow-[0_30px_60px_rgba(0,0,0,0.12)]
+			        rounded-3xl
+			        border border-white/40
+			    ">
+
+		<h2 class="text-2xl font-semibold text-center text-gray-800 mb-10">
+			Ajouter un article 💕
+		</h2>
+
+		<div
+			class="flex flex-col space-y-6">
+
+			{# ===== NAME ===== #}
+			<div class="flex flex-col">
 				{{ form_label(form.name, null, {
-                label_attr: { class: 'block text-sm font-medium text-gray-600 mb-2' }
-            }) }}
+                    label_attr: { class: 'text-sm font-medium text-gray-600 mb-2' }
+                }) }}
 
 				{{ form_widget(form.name, {
-                attr: {
-                    class: '
-                        w-full px-5 py-3 
-                        rounded-2xl 
-                        border border-gray-200 
-                        text-gray-800
-                        focus:outline-none 
-                        focus:ring-2 focus:ring-blue-400 
-                        focus:border-blue-400 
-                        transition
-                        bg-blue-50
-                    '
-                }
-            }) }}
+                    attr: {
+                        class: '
+                            w-full px-5 py-4
+                            rounded-2xl
+                            border border-white/50
+                            bg-white/70
+                            backdrop-blur-sm
+                            text-gray-800
+                            shadow-inner
+                            focus:outline-none
+                            focus:ring-2 focus:ring-indigo-300
+                            focus:border-indigo-300
+                            transition-all duration-200
+                        '
+                    }
+                }) }}
 
 				{{ form_errors(form.name) }}
 			</div>
+			{# ===== IMAGE ===== #}
+			<div>
+				{{ form_label(form.imageFile, null, {
+                    label_attr: { class: 'text-sm font-medium text-gray-600 mb-2' }
+                }) }}
 
-			<!-- Submit Button -->
-			<div class="flex mt-8">
-				<button type="submit" class=" grow size-10
-                                        text-gray-700
-                                        font-medium
-                                        shadow-md
-                                        active:scale-95
-                                        transition-all duration-200
-                                        bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full
-                                        ">
-					Valider
+				{{ form_widget(form.imageFile, {
+                    attr: {
+                        class: '
+                            w-full text-sm
+                            file:mr-4 file:py-2 file:px-4
+                            file:rounded-full
+                            file:border-0
+                            file:text-sm file:font-semibold
+                            file:bg-indigo-100
+                            file:text-indigo-700
+                            hover:file:bg-indigo-200
+                        '
+                    }
+                }) }}
+
+				{{ form_errors(form.imageFile) }}
+			</div>
+
+			{# ===== LINKS ===== #}
+			<div data-controller="articles">
+				<h3 class="text-sm font-medium text-gray-600 mb-4">
+					Liens vers les boutiques 🔗
+				</h3>
+
+				<div data-articles-target="links" data-prototype="{{ form_widget(form.links.vars.prototype)|e('html_attr') }}" class="space-y-6">
+
+					{% for linkForm in form.links %}
+						<div class="link-item p-4 bg-white/70 rounded-2xl shadow-inner space-y-4">
+							{{ form_row(linkForm.label) }}
+							{{ form_row(linkForm.url) }}
+						</div>
+					{% endfor %}
+				</div>
+				<button type="button" id="add-link" data-action="articles#addLink" class="mt-4 text-sm font-medium text-indigo-600 hover:text-indigo-800">
+					+ Ajouter un lien
 				</button>
 			</div>
+
+			{# ===== SUBMIT ===== #}
+			<button type="submit" class="
+					                    w-full py-4
+					                    text-white font-semibold
+					                    rounded-2xl
+					                    bg-gradient-to-r from-blue-400 to-indigo-400
+					                    shadow-lg
+					                    hover:shadow-xl
+					                    hover:scale-[1.02]
+					                    active:scale-95
+					                    transition-all duration-200
+					                ">
+				Valider
+			</button>
+
 		</div>
 	</div>
 </div>

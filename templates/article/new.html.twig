@@ -5,9 +5,8 @@
 
 {% block body %}
 
-	<div class="flex items-center justify-center  ">
-	
-		{{ form_start(form)}}
+	<div class="flex items-center justify-center">	
+		{{ form_start(form,{ attr: { enctype: 'multipart/form-data' }})}}
 		{% include 'article/_form.html.twig' %}
 		{{ form_end(form) }}
 		
