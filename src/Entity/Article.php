@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use \DateTimeImmutable;
+use App\Enum\ArticleCategory;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[ORM\Table(indexes: [new ORM\Index(name: "idx_article_category", columns: ["category"])])]
 #[ORM\HasLifecycleCallbacks]
 class Article
 {
@@ -35,13 +37,16 @@ class Article
     #[ORM\Column(type: "float", nullable: true)]
     private ?float $price = null;
 
+    #[ORM\Column(enumType: ArticleCategory::class, nullable: true)]
+    private ?ArticleCategory $category= null;
+
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: ArticleLink::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $links;
 
     public function __construct()
-{
-    $this->links = new ArrayCollection();
-}
+    {
+        $this->links = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -111,6 +116,17 @@ class Article
     {
         $this->price = $price;
 
+        return $this;
+    }
+
+    public function getCategory(): ?ArticleCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(ArticleCategory $category): static
+    {
+        $this->category = $category;
         return $this;
     }
 

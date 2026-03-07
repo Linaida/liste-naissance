@@ -2,8 +2,10 @@
 
 namespace App\Form\Type;
 
+use App\Enum\ArticleCategory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,7 +27,7 @@ class ArticleType extends AbstractType
                 'constraints' => [
                     new Assert\File(
                         maxSize: '9M',
-                        extensions: ['jpeg','jpg','png','webp'],
+                        extensions: ['jpeg', 'jpg', 'png', 'webp'],
                         extensionsMessage: 'Veuillez télécharger une image au format JPEG, JPG, PNG ou WEBP.',
                     )
                 ],
@@ -41,6 +43,12 @@ class ArticleType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
                 'prototype' => true,
+            ])
+            ->add('category', EnumType::class, [
+                'class' => ArticleCategory::class,
+                'label' => 'Catégorie',
+                'choice_label' => fn(ArticleCategory $choice) => $choice->label(),
+                'label' => 'Catégorie',
             ])
         ;
     }
