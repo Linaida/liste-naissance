@@ -32,6 +32,9 @@ class Article
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagePath = null;
 
+    #[ORM\Column(type: "float", nullable: true)]
+    private ?float $price = null;
+
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: ArticleLink::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $links;
 
@@ -96,6 +99,18 @@ class Article
                 $link->setArticle(null);
             }
         }
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?float $price): static
+    {
+        $this->price = $price;
+
         return $this;
     }
 

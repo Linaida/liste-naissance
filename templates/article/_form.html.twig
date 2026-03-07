@@ -43,6 +43,32 @@
 
 				{{ form_errors(form.name) }}
 			</div>
+			{# ===== PRIX ===== #}
+			<div>
+				{{ form_label(form.price, null, {
+                    label_attr: { class: 'text-sm font-medium text-gray-600 mb-2' }
+                }) }}
+
+				{{ form_widget(form.price, {
+                    attr: {
+                        class: '
+                            w-full px-5 py-4
+                            rounded-2xl
+                            border border-white/50
+                            bg-white/70
+                            backdrop-blur-sm
+                            text-gray-800
+                            shadow-inner
+                            focus:outline-none
+                            focus:ring-2 focus:ring-indigo-300
+                            focus:border-indigo-300
+                            transition-all duration-200
+                        '
+                    }
+                }) }}
+
+				{{ form_errors(form.price) }}
+			</div>
 			{# ===== IMAGE ===== #}
 			<div>
 				{{ form_label(form.imageFile, null, {
@@ -101,7 +127,6 @@
 					                ">
 				Valider
 			</button>
-
 		</div>
 	</div>
 </div>

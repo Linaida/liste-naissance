@@ -5,6 +5,7 @@ namespace App\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -28,6 +29,11 @@ class ArticleType extends AbstractType
                         extensionsMessage: 'Veuillez télécharger une image au format JPEG, JPG, PNG ou WEBP.',
                     )
                 ],
+            ])
+            ->add('price', MoneyType::class, [
+                'label' => 'Prix',
+                'currency' => 'EUR',
+                'required' => false,
             ])
             ->add('links', CollectionType::class, [
                 'entry_type' => ArticleLinkType::class,
