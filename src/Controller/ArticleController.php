@@ -89,6 +89,22 @@ final class ArticleController extends AbstractController
         ]);
     }
 
+    #[Route('/article/{id}/delete', name: 'articles_delete', methods: ['POST'])]
+    public function deleteArticle(Request $request, Article $article): Response
+    {
+        if (!$this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('CSRF token invalide.');
+        }
+        if ($article->getImagePath() && str_starts_with($article->getImagePath(), 'http') === false) {
+            $imagePath = $this->getParameter('uploads_directory') . '/' . $article->getImagePath();
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+        $this->articleRepository->remove($article, true);
+        return $this->redirectToRoute('articles_list');
+    }
+
     #[Route('/article/{id}', name: 'article_show')]
     public function show(Article $article): Response
     {
