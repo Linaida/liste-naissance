@@ -1,0 +1,44 @@
+<div {{ attributes }} data-controller="image-choice" class="space-y-6">
+    <h3 class="text-sm font-medium text-gray-600">
+        {{ label }}
+    </h3>
+
+    {# Switch Upload / URL #}
+    <div class="flex gap-3">
+        <button type="button"
+                data-action="image-choice#showUpload"
+                class="px-4 py-2 text-xs font-semibold rounded-full bg-indigo-100 text-indigo-700">
+            Upload
+        </button>
+
+        <button type="button"
+                data-action="image-choice#showUrl"
+                class="px-4 py-2 text-xs font-semibold rounded-full bg-pink-100 text-pink-700">
+            Lien URL
+        </button>
+    </div>
+
+    {# Upload block #}
+    <div data-image-choice-target="uploadBlock">
+        {{ form_row(imagefile,
+            attr: {
+                'data-action': 'change->image-choice#previewFromFile'
+            }) 
+        }}
+    </div>
+
+    {# URL block #}
+    <div data-image-choice-target="urlBlock" class="hidden">
+        {{ form_row(imageurl, {
+            attr: {
+                'data-action': 'input->image-choice#previewFromUrl'
+            }
+        }) }}
+    </div>
+
+    {# Preview #}
+    <div class="mt-4">
+        <img data-image-choice-target="preview"
+             class="hidden w-40 h-40 object-cover rounded-2xl shadow-md border border-gray-200" />
+    </div>
+</div>

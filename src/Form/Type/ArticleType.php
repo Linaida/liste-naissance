@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -31,6 +32,11 @@ class ArticleType extends AbstractType
                         extensionsMessage: 'Veuillez télécharger une image au format JPEG, JPG, PNG ou WEBP.',
                     )
                 ],
+            ])
+            ->add('imageUrl', UrlType::class, [
+                'label' => 'URL de l’image',
+                'mapped' => false,
+                'required' => false,
             ])
             ->add('price', MoneyType::class, [
                 'label' => 'Prix',

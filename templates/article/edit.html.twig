@@ -4,12 +4,11 @@
 
 {% block body %}
 
-    <div class="flex items-center justify-center">
+    <div class="flex items-center justify-center ">
 		<div class="flex flex-col">
 			{{ form_start(form,{ attr: { enctype: 'multipart/form-data' }})}}
 			{% include 'article/_form.html.twig' %}
-			{{ form_end(form,{ render_rest: false }) }}
-			<twig:BackLink href="{{ path('articles_list') }}" label="Retour à la liste des articles"/>
+			{{ form_end(form,{ render_rest: false }) }}			
 		</div>
 
 	</div>

@@ -32,6 +32,7 @@ final class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
             $imageFile = $form->get('imageFile')->getData();
+            $imageUrl  = $form->get('imageUrl')->getData();
 
             if ($imageFile) {
                 $newFilename = uniqid() . '.' . $imageFile->guessExtension();
@@ -42,6 +43,8 @@ final class ArticleController extends AbstractController
                 );
 
                 $article->setImagePath($newFilename);
+            } elseif ($imageUrl) {
+                $article->setImagePath($imageUrl);
             }
             // Save the article to the database
             $this->articleRepository->save($article, true);
@@ -61,7 +64,7 @@ final class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('imageFile')->getData();
-
+            $imageUrl  = $form->get('imageUrl')->getData();
             if ($imageFile) {
                 $newFilename = uniqid() . '.' . $imageFile->guessExtension();
 
@@ -71,6 +74,8 @@ final class ArticleController extends AbstractController
                 );
 
                 $article->setImagePath($newFilename);
+            } elseif ($imageUrl) {
+                $article->setImagePath($imageUrl);
             }
             // Save the article to the database
             $this->articleRepository->save($article, true);

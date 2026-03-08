@@ -147,3 +147,7 @@
   background-position: center;
   background-attachment: fixed;
 }
+
+.form-article {
+      min-width: 100vh;
+  }
