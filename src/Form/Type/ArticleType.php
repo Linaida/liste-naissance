@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Enum\ArticleCategory;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -55,6 +56,10 @@ class ArticleType extends AbstractType
                 'label' => 'Catégorie',
                 'choice_label' => fn(ArticleCategory $choice) => $choice->label(),
                 'label' => 'Catégorie',
+            ])
+            ->add('booked', CheckboxType::class, [
+                'label' => 'Déjà réservé ?',
+                'required' => false,
             ])
         ;
     }
