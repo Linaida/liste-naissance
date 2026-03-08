@@ -10,6 +10,7 @@ enum ArticleCategory: string
     case HYGIENE = 'hygiene';
     case TRANSPORT = 'transport';
     case FOOD = 'food';
+    case BED = 'bed';
     case OTHER = 'other';
 
     public function label(): string
@@ -21,6 +22,7 @@ enum ArticleCategory: string
             self::HYGIENE => 'Hygiène',
             self::TRANSPORT => 'Transport',
             self::FOOD => 'Alimentation',
+            self::BED => 'Literie',
             self::OTHER => 'Autre',
         };
     }

@@ -1,32 +1,105 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste de naissance{% endblock %}
+{% block title %}Liste de naissance
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="flex align-center content-center justify-center h-screen">
-    <twig:Card class=" w-full sm:w-2xl h-96 mt-20 p-12">
-    <twig:Card:Header>
-        <twig:Card:Title class="text-center text-2xl">Bienvenue sur notre liste de naissance !</twig:Card:Title>
-        <twig:Card:Description></twig:Card:Description>
-    </twig:Card:Header>
-    <twig:Card:Content class="sm:mt-15">
-    <div class="flex flex-col align-center content-center justify-center w-full border-2 border-gray-300 rounded-lg p-4 text-center">
-        <p class="text-lg italic">Où en sommes-nous </p>
-        <p> Semaine de grossesse : <span class="font-bold">15 semaines</span> </p>
-        <p> Taille du bébé : <span class="font-bold">10 cm</span> </p>
-        </div>
-    </twig:Card:Content>
-    <twig:Card:Footer class="">
-        <div class="flex align-center content-center justify-center w-full">
-            <twig:Button variant="outline" link="{{ path('articles_list') }}">Voir les articles</twig:Button>
-            <twig:Button variant="outline" class="ml-4"> <twig:ux:icon name="ph:gender-female" />Connaître le sexe du bébé <twig:ux:icon name="ph:gender-male" /> </twig:Button>
-        </div>
-    </twig:Card:Footer>
-</twig:Card>
-</div>
+	<div class="flex flex-col ">
+		<twig:Card  class="p-12 mt-2 bg-pink-50 shadow-xl rounded-3xl border border-pink-100 mx-auto w-sm md:w-3/4 lg:w-1/2">
+			<twig:Card:Header>
+				<twig:Card:Title class="text-center text-2xl text-indigo-800">Bienvenue sur notre liste de naissance !</twig:Card:Title>
+				<twig:Card:Description></twig:Card:Description>
+			</twig:Card:Header>
+			<twig:Card:Content class="sm:mt-10">
+				<div class="flex flex-col align-center content-center justify-center w-full border-2 border-pink-100 rounded-lg p-4 text-center text-indigo-900">
+					<p class="text-lg italic">Où en sommes-nous
+					</p>
+					<p>
+						Semaine de grossesse :
+						<span class="font-bold">19 semaines</span>
+					</p>
+					<p>
+						Taille du bébé :
+						<span class="font-bold">20 cm</span>
+					</p>
+				</div>
+			</twig:Card:Content>
+			<twig:Card:Footer class="">
+				<div class="flex align-center content-center justify-center w-full">
+					<twig:Button variant="default" class="ml-4">
+						<twig:ux:icon name="ph:gender-female"/>Connaître le sexe du bébé
+						<twig:ux:icon name="ph:gender-male"/>
+					</twig:Button>
+				</div>
+			</twig:Card:Footer>
+		</twig:Card>
+		<div class="container mx-auto px-4 py-12">
+			<section
+				class="mt-12" data-controller="filter">
+
+				{# ===== FILTRES ===== #}
+				<div class="flex flex-wrap gap-3 mb-8">
+
+					<button 
+                        data-action="filter#showAll"
+                        data-filter-target="btn"
+                        data-category="all"
+                        class="px-4 py-2 text-sm font-medium rounded-full
+                             backdrop-blur border border-indigo-300 bg-indigo-300
+                             shadow hover:shadow-md transition ">
+						Tous ({{ articles|length }})
+					</button>
+
+					{% for cat in categories %}
+						<button data-action="filter#filter" data-filter-target="btn" data-category="{{ cat.value }}"
+                            class="px-4 py-2 text-sm font-medium rounded-full
+                             backdrop-blur border bg-indigo-300 border-indigo-300 
+                                shadow hover:shadow-md transition">
+							{{ cat.label() }} ({{ articles|filter(a => a.category and a.category.value == cat.value)|length }})
+						</button>
+					{% endfor %}
+
+				</div>
+				<div>
+				<div class="flex gap-3 mb-6">
+				
+				<button
+					data-action="filter#filterStatus"
+					data-status="available"
+					data-filter-target="statusBtn"
+					class="filter-chip filter-chip-active">
+					Disponibles
+				</button>
+
+				<button
+					data-action="filter#filterStatus"
+					data-status="booked"
+					data-filter-target="statusBtn"
+					class="filter-chip">
+					Réservés
+				</button>
+
+			</div>
+				</div>
+
+				{# ===== LISTE ===== #}
+				<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+
+					{% for article in articles %}
+						<div data-filter-target="item" 
+						data-category="{{ article.category ? article.category.value : 'none' }}"
+						data-status="{{ article.booked ? 'booked' : 'available' }}"
+						>
+							<twig:ArticleCard :article="article"/>
+						</div>
+					{% endfor %}
+
+				</div>
+
+			</section>
+
+		</div>
+	</div>
+
 {% endblock %}
