@@ -53,6 +53,36 @@ final class ArticleController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/articles/{id}/edit', name: 'articles_edit', methods: ['GET', 'POST'])]
+    public function editArticle(Request $request, Article $article): Response
+    {
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('imageFile')->getData();
+
+            if ($imageFile) {
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                $imageFile->move(
+                    $this->getParameter('uploads_directory'),
+                    $newFilename
+                );
+
+                $article->setImagePath($newFilename);
+            }
+            // Save the article to the database
+            $this->articleRepository->save($article, true);
+
+            return $this->redirectToRoute('articles_list');
+        }
+
+        return $this->render('article/edit.html.twig', [
+            'form' => $form,
+            'article' => $article,
+        ]);
+    }
 
     #[Route('/article/{id}', name: 'article_show')]
     public function show(Article $article): Response
