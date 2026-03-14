@@ -8,6 +8,7 @@
 - Réaliser le système de réservation d'article
 - Administration : Indiquer la date de début de grossesse et d'accouchement pour calculer automatiquement les semaines de grossesse
 - Administration : Faire une page pour ajouter des infos sur bébé ( ex : taille )
+- Faire un logo pour l'application
 
 ## Fait
 - Administration : ajouter, modifier et supprimer un article

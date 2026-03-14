@@ -9,7 +9,7 @@ export default class extends Controller {
     connect() {
         this.applyFilters()
     }
- // ===== Catégorie =====
+    // ===== Catégorie =====
     showAll() {
         this.itemTargets.forEach(el => el.classList.remove('hidden'))
         // On applique le style actif au bouton "Tous"
@@ -26,10 +26,10 @@ export default class extends Controller {
         this.itemTargets.forEach(el => {
             if (el.dataset.category === cat) {
                 el.classList.remove('hidden')
-                
+
             } else {
                 el.classList.add('hidden')
-                
+
             }
         })
     }
@@ -50,12 +50,12 @@ export default class extends Controller {
         )
     }
 
-     // ===== Statut =====
-     filterStatus(event) {
+    // ===== Statut =====
+    filterStatus(event) {
         this.activeStatus = event.currentTarget.dataset.status
 
         // UI active
-        this.statusBtnTargets.forEach(b => 
+        this.statusBtnTargets.forEach(b =>
             b.classList.remove('filter-chip-active')
         )
         event.currentTarget.classList.add('filter-chip-active')
@@ -74,6 +74,31 @@ export default class extends Controller {
 
             item.classList.toggle('hidden', !(matchCategory && matchStatus))
         })
+    }
+
+    // ===== Prix =====
+    sortAsc(event) {
+        this.sortByPrice(true)
+        this.setActive(event.currentTarget)
+    }
+
+    sortDesc(event) {
+        this.sortByPrice(false)
+        this.setActive(event.currentTarget)
+    }
+
+    sortByPrice(ascending = true) {
+        const container = this.cardTargets[0].parentElement
+
+        const cards = [...this.cardTargets]
+
+        cards.sort((a, b) => {
+            const pa = parseFloat(a.dataset.price)
+            const pb = parseFloat(b.dataset.price)
+            return ascending ? pa - pb : pb - pa
+        })
+
+        cards.forEach(card => container.appendChild(card))
     }
 
 }
