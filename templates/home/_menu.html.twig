@@ -1,32 +1,52 @@
-<header class="sticky top-0 z-50 backdrop-blur-md bg-white/60 border-b border-pink-100 shadow-sm">
+<header class="sticky top-0 z-50 backdrop-blur-md bg-gradient-to-r from-pink-100/70 via-blue-100/70 to-indigo-100/70 border-b border-pink-100 shadow-sm">
 
-    <nav class="max-w-6xl mx-auto flex items-center gap-6 px-6 py-3">
+    <nav class="max-w-6xl mx-auto flex items-center px-6 py-3">
 
-        <a
-            href="{{ path('home') }}"
-            class="
-                px-4 py-2 rounded-full text-sm font-semibold transition
-                {{ app.request.attributes.get('_route') == 'home'
-                    ? 'bg-indigo-500 text-white shadow'
-                    : 'text-indigo-700 hover:bg-indigo-100'
-                }}
-            "
-        >
-            Accueil
-        </a>
+        {# Navigation principale #}
+        <div class="flex items-center gap-6">
 
-        <a
-            href="{{ path('birthlist') }}"
-            class="
-                px-4 py-2 rounded-full text-sm font-semibold transition
-                {{ app.request.attributes.get('_route') == 'birthlist'
-                    ? 'bg-indigo-500 text-white shadow'
-                    : 'text-indigo-700 hover:bg-indigo-100'
-                }}
-            "
-        >
-            Liste de naissance
-        </a>
+            <a
+                href="{{ path('home') }}"
+                class="
+                    px-4 py-2 rounded-full text-sm font-semibold transition
+                    {{ app.request.attributes.get('_route') == 'home'
+                        ? 'bg-indigo-500 text-white shadow'
+                        : 'text-indigo-700 hover:bg-indigo-100'
+                    }}
+                "
+            >
+                Accueil
+            </a>
+
+            <a
+                href="{{ path('birthlist') }}"
+                class="
+                    px-4 py-2 rounded-full text-sm font-semibold transition
+                    {{ app.request.attributes.get('_route') == 'birthlist'
+                        ? 'bg-indigo-500 text-white shadow'
+                        : 'text-indigo-700 hover:bg-indigo-100'
+                    }}
+                "
+            >
+                Liste de naissance
+            </a>
+
+        </div>
+
+        {# Bouton Admin à droite #}
+        <div class="ml-auto">
+
+            <a
+                href="{{ path('articles_list') }}"
+                class="
+                    px-4 py-2 rounded-full text-sm font-semibold transition
+                    text-pink-700 hover:bg-pink-200
+                "
+            >
+                ⚙ Admin
+            </a>
+
+        </div>
 
     </nav>
 
