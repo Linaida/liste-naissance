@@ -17,7 +17,7 @@ class ArticleLinkType extends AbstractType
                 'label' => 'URL',
             ])
             ->add('label', TextType::class, [
-                'label' => 'Titre',
+                'label' => 'Enseigne',
             ])
         ;
     }

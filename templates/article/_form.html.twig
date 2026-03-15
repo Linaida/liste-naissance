@@ -134,8 +134,9 @@
 
 					{% for linkForm in form.links %}
 						<div class="link-item p-4 bg-white/70 rounded-2xl shadow-inner space-y-4">
-							{{ form_row(linkForm.label) }}
 							{{ form_row(linkForm.url) }}
+							{{ form_row(linkForm.label) }}
+							
 						</div>
 					{% endfor %}
 				</div>

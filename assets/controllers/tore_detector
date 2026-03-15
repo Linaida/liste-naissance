@@ -1,0 +1,32 @@
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+
+    static targets = ["url", "label"]
+
+    detect() {
+
+        const url = this.urlTarget.value
+
+        if (/amazon\./i.test(url)) {
+            this.labelTarget.value = "Amazon"
+        }
+
+        else if (/aubert\.com/i.test(url)) {
+            this.labelTarget.value = "Aubert"
+        }
+
+        else if (/vertbaudet/i.test(url)) {
+            this.labelTarget.value = "Vertbaudet"
+        }
+
+        else if (/ikea\.com/i.test(url)) {
+            this.labelTarget.value = "IKEA"
+        }
+
+        else if (/cdiscount\.com/i.test(url)) {
+            this.labelTarget.value = "Cdiscount"
+        }
+
+    }
+}
