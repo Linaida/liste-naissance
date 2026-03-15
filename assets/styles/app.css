@@ -153,9 +153,7 @@
 }
 
 .filter-chip {
-    @apply px-4 py-2 text-sm font-medium rounded-full
-        bg-white/70 backdrop-blur border border-white/40
-        shadow hover:shadow-md transition;
+    @apply px-4 py-2 text-sm font-medium rounded-full border border-indigo-300 shadow transition;
 }
 
 .filter-chip-active {

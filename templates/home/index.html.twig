@@ -6,7 +6,7 @@
 {% block body %}
 
 	<div class="flex flex-col ">
-		<twig:Card class="p-12 mt-2 bg-pink-50 shadow-xl rounded-3xl border border-pink-100 mx-auto w-sm md:w-3/4 lg:w-1/2">
+		{# <twig:Card class="p-12 mt-2 bg-pink-50 shadow-xl rounded-3xl border border-pink-100 mx-auto w-sm md:w-3/4 lg:w-1/2">
 			<twig:Card:Header>
 				<twig:Card:Title class="text-center text-2xl text-indigo-800">Bienvenue sur notre liste de naissance !</twig:Card:Title>
 				<twig:Card:Description></twig:Card:Description>
@@ -33,76 +33,20 @@
 					</twig:Button>
 				</div>
 			</twig:Card:Footer>
-		</twig:Card>
-		<div class="container mx-auto px-4 py-12">
-			<section
-				class="mt-12" data-controller="filter">
+		</twig:Card> #}
 
-				{# ===== FILTRES PAR CATEGORIES ===== #}
-				<div class="flex flex-wrap gap-3 mb-8">
-
-					<button data-action="filter#showAll" data-filter-target="btn" data-category="all" class="px-4 py-2 text-sm font-medium rounded-full
-														                             backdrop-blur border border-indigo-300 bg-indigo-300
-														                             shadow hover:shadow-md transition ">
-						Tous ({{ articles|length }})
-					</button>
-
-					{% for cat in categories %}
-						<button data-action="filter#filter" data-filter-target="btn" data-category="{{ cat.value }}" class="px-4 py-2 text-sm font-medium rounded-full
-																                             backdrop-blur border bg-indigo-300 border-indigo-300
-																                                shadow hover:shadow-md transition">
-							{{ cat.label() }}
-							({{ articles|filter(a => a.category and a.category.value == cat.value)|length }})
-						</button>
-					{% endfor %}
-
-				</div>
-				{# ===== FILTRES PAR DISPONIBILITES ===== #}
-				<div>
-					<div class="flex gap-3 mb-6">
-
-						<button data-action="filter#filterStatus" data-status="available" data-filter-target="statusBtn" class="filter-chip filter-chip-active">
-							Disponibles
-						</button>
-
-						<button data-action="filter#filterStatus" data-status="booked" data-filter-target="statusBtn" class="filter-chip">
-							Réservés
-						</button>
-
-					</div>
-				</div>
-				{# ===== TRI PAR PRIX ===== #}
-				<div>
-					<div class="flex items-center gap-2 ml-auto">
-						<span class="text-sm text-gray-500">Trier :</span>
-
-						<button data-action="filter#sortAsc"  class="filter-chip">
-							Prix ↑
-						</button>
-
-						<button data-action="filter#sortDesc" class="filter-chip">
-							Prix ↓
-						</button>
-
-					</div>
-				</div>
-				{# ===== LISTE ===== #}
-				<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-
-					{% for article in articles %}
-						<div data-filter-target="item" 
-						data-category="{{ article.category ? article.category.value : 'none' }}" 
-						data-status="{{ article.booked ? 'booked' : 'available' }}"
-						data-price="{{ article.price ? article.price : 0 }}"
-						>
-							<twig:ArticleCard :article="article"/>
-						</div>
-					{% endfor %}
-
-				</div>
-
-			</section>
-
+<div class="mx-auto my-2">
+		{% include 'home/partials/_filters.html.twig' with {
+      		categories: categories
+    	} %}
+		</div>
+		<div class="mx-2">
+		<turbo-frame id="articles-list">
+			{% include 'home/partials/_articles.html.twig' with {
+				articles: articles,
+				categories: categories
+			} %}
+		</turbo-frame>
 		</div>
 	</div>
 

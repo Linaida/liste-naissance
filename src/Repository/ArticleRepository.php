@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\DTO\PaginationDTO;
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,28 +35,21 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
-    //    /**
-    //     * @return Article[] Returns an array of Article objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findBySearch(PaginationDTO $pagination): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->setFirstResult($pagination->getOffset())
+            ->setMaxResults($pagination->limit);
 
-    //    public function findOneBySomeField($value): ?Article
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        foreach ($pagination->filters as $filter) {
+            $qb->andWhere(sprintf('a.%s %s :%s', $filter->field, $filter->operator, $filter->field))
+                ->setParameter($filter->field, $filter->value);
+        }
+
+        foreach ($pagination->orders as $order) {
+            $qb->addOrderBy(sprintf('a.%s', $order->field), $order->direction);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }
