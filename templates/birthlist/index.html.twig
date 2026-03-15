@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de naissance
+{% endblock %}
+
+{% block body %}
+<div class="mx-auto my-2">
+			{% include 'birthlist/partials/_filters.html.twig' with {
+      		categories: categories
+    	} %}
+		</div>
+		<div class="mx-2">
+			<turbo-frame id="articles-list">
+				{% include 'birthlist/partials/_articles.html.twig' with {
+				articles: articles,
+				categories: categories
+			} %}
+			</turbo-frame>
+		</div>
+{% endblock %}

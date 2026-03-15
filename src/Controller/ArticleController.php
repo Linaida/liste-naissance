@@ -146,7 +146,7 @@ final class ArticleController extends AbstractController
 
         $articles = $repo->findBySearch($pagination);
 
-        return $this->render('home/partials/_birth_list_frame.html.twig', [
+        return $this->render('birthlist/partials/_birth_list_frame.html.twig', [
             'articles' => $articles
         ]);
     }

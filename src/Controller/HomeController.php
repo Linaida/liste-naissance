@@ -15,7 +15,13 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(Request $request, ArticleRepository $repo): Response
+    public function home(): Response
+    {
+        return $this->render('home/index.html.twig');
+    }
+
+    #[Route('/liste-naissance', name: 'birthlist')]
+    public function birthlist(Request $request, ArticleRepository $repo): Response
     {
         $pagination = new PaginationDTO();
 
@@ -40,11 +46,13 @@ final class HomeController extends AbstractController
             if ($sort === 'price_desc') {
                 $pagination->orders[] = new OrderDTO('price', 'DESC');
             }
+        }else{
+            $pagination->orders[] = new OrderDTO('price', 'ASC');
         }
 
         $articles = $repo->findBySearch($pagination);
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('birthlist/index.html.twig', [
             'articles' => $articles,
             'categories' => ArticleCategory::cases()
         ]);

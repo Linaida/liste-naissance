@@ -157,5 +157,8 @@
 }
 
 .filter-chip-active {
-    @apply bg-indigo-500 text-white shadow-lg;
+    @apply bg-indigo-500 text-white;
+}
+.filter-chip-inactive {
+    @apply bg-indigo-100 text-indigo-700 hover:bg-indigo-200
 }
