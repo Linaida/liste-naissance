@@ -1,62 +1,75 @@
+{% set currentCategory = app.request.query.get('category') %}
+{% set currentStatus = app.request.query.get('status') %}
+{% set currentSort = app.request.query.get('sort') %}
+
 <div class="flex flex-col flex-wrap gap-3 mb-8">
-	<div class="flex items-center gap-2">
-		<a href="{{ path('birthlist') }}" data-turbo-frame="articles" class="filter-chip
-				{% if app.request.query.get('category') is null %} filter-chip-active {% else %}  filter-chip-inactive
-				{% endif %}"> 
-			Tous
+	<div class="flex flex-wrap gap-2 mb-4 items-center">
+
+		<span class="text-sm font-semibold text-indigo-700 mr-2">
+			Catégorie
+		</span>
+
+		<a href="{{ path('birthlist', app.request.query.all|merge({category: ''})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
+						{% if not currentCategory %} filter-chip-active {% endif %}
+						">
+			Toutes
 		</a>
 
 		{% for cat in categories %}
-
-			<a href=" {{ path('birthlist', app.request.query.all|merge({category: cat.value} )) }}" data-turbo-frame=" articles" class="filter-chip
-								{% if app.request.query.get('category') === cat.value  %}
-									filter-chip-active {% else %}  filter-chip-inactive
-									{% endif %} ">
-
+			<a href="{{ path('birthlist', app.request.query.all|merge({category: cat.value} )) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
+								 {% if currentCategory == cat.value %} filter-chip-active {% endif %}
+								 ">
 				{{ cat.label() }}
+			</a>
+		{% endfor %}
 
+	</div>
+	<div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+
+		<div class="flex gap-2 items-center">
+
+			<span class="text-sm font-semibold text-indigo-700">
+				Disponibilité
+			</span>
+			<a href="{{ path('birthlist', app.request.query.all|merge({status: ''})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
+															{{ not currentStatus or currentStatus == '' ? 'filter-chip-active' : '' }}
+								">
+				Tous
+			</a>
+			<a href="{{ path('birthlist', app.request.query.all|merge({status:'available'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
+								{{ currentStatus == 'available' ? 'filter-chip-active' : '' }}
+								">
+				Disponibles
 			</a>
 
-		{% endfor %}
-	</div>
-	<div class="flex items-center gap-2">
-		<a href="{{ path('birthlist', app.request.query.all|merge({status: ''})) }}" data-turbo-frame="articles" class="filter-chip
-										{% if app.request.query.get('status') == '' %}
-										filter-chip-active {% else %}  filter-chip-inactive
-										{% endif %}
-										">
-			Tous
-		</a>
-        <a href="{{ path('birthlist', app.request.query.all|merge({status: 'available'})) }}" data-turbo-frame="articles" class="filter-chip
-										{% if app.request.query.get('status') == 'available' %}
-										filter-chip-active {% else %}  filter-chip-inactive
-										{% endif %}
-										">
-			Disponibles
-		</a>
-		<a href="{{ path('birthlist', app.request.query.all|merge({status: 'booked'})) }}" data-turbo-frame="articles" class="filter-chip
-							{% if app.request.query.get('status') == 'booked' %}
-							filter-chip-active {% else %}  filter-chip-inactive
-							{% endif %}
-							">
-			Réservés
-		</a>
+			<a href="{{ path('birthlist', app.request.query.all|merge({status:'booked'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
+								{{ currentStatus == 'booked' ? 'filter-chip-active' : '' }}
+								">
+				Réservés
+			</a>
 
-	</div>
-	<div class="flex items-center gap-2">
-		<a href="{{ path('birthlist', app.request.query.all|merge({sort: 'price_asc'})) }}" data-turbo-frame="articles" class="filter-chip
-				{% if app.request.query.get('sort') is null or app.request.query.get('sort') == 'price_asc'  %}
-				filter-chip-active {% else %}  filter-chip-inactive
-				{% endif %}
-				">
-			Prix ↑
-		</a>
-        <a href="{{ path('birthlist', app.request.query.all|merge({sort: 'price_desc'})) }}" data-turbo-frame="articles" class="filter-chip
-				{% if app.request.query.get('sort') == 'price_desc' %}
-				filter-chip-active {% else %}  filter-chip-inactive
-				{% endif %}
-				">
-			Prix ↓
-		</a>
+		</div>
+
+
+		<div class="flex gap-2 items-center">
+
+			<span class="text-sm font-semibold text-indigo-700">
+				Trier
+			</span>
+
+			<a href="{{ path('birthlist', app.request.query.all|merge({sort:'price_asc'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
+								{% if not currentSort or currentSort == 'price_asc' %} filter-chip-active {% endif %}
+								">
+				Prix ↑
+			</a>
+
+			<a href="{{ path('birthlist', app.request.query.all|merge({sort:'price_desc'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
+								{% if currentSort == 'price_desc' %} filter-chip-active {% endif %}
+								">
+				Prix ↓
+			</a>
+
+		</div>
+
 	</div>
 </div>
