@@ -21,17 +21,16 @@ export default class extends Controller {
         this.index = this.linksTarget.children.length;
     }
 
-    addLink(event) {
-        event.preventDefault();
-        
-        const prototype = this.linksTarget.dataset.prototype;
-        const newForm = prototype.replace(/__name__/g, this.index);
-        const div = document.createElement('div');
-        div.classList.add('link-item', 'p-4', 'bg-white/70', 'rounded-2xl', 'shadow-inner', 'space-y-4');
-        div.innerHTML = newForm;
-        this.linksTarget.appendChild(div);
-        this.index++;
-    }
+    addLink() {
+
+    const prototype = this.linksTarget.dataset.prototype
+    const index = this.linksTarget.children.length
+
+    const html = prototype.replace(/__name__/g, index)
+
+    this.linksTarget.insertAdjacentHTML("beforeend", html)
+
+}
 
     // Add custom controller actions here
     // fooBar() { this.fooTarget.classList.toggle(this.bazClass) }

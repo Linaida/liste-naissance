@@ -15,9 +15,18 @@ class ArticleLinkType extends AbstractType
         $builder
             ->add('url', UrlType::class, [
                 'label' => 'URL',
+                'attr' => [
+                    'data-store-detector-target' => 'url',
+                    'class' => 'store-detector-url',
+                    'data-action' => 'input->store-detector#detect'
+                ]
             ])
             ->add('label', TextType::class, [
-                'label' => 'Enseigne',
+                'label' => 'Enseigne',                
+                'attr' => [
+                    'data-store-detector-target' => 'label',
+                    'class' => 'store-detector-label',
+                    ]
             ])
         ;
     }

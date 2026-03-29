@@ -125,20 +125,13 @@
 			</div>
 
 			{# ===== LINKS ===== #}
-			<div data-controller="articles">
+			<div data-controller="articles store-detector">
 				<h3 class="text-sm font-medium text-indigo-600 mb-4">
 					Liens vers les boutiques 🔗
 				</h3>
 
 				<div data-articles-target="links" data-prototype="{{ form_widget(form.links.vars.prototype)|e('html_attr') }}" class="space-y-6">
 
-					{% for linkForm in form.links %}
-						<div class="link-item p-4 bg-white/70 rounded-2xl shadow-inner space-y-4">
-							{{ form_row(linkForm.url) }}
-							{{ form_row(linkForm.label) }}
-							
-						</div>
-					{% endfor %}
 				</div>
 				<button type="button" id="add-link" data-action="articles#addLink" class="mt-4 text-sm font-medium text-indigo-600 hover:text-indigo-800">
 					+ Ajouter un lien
