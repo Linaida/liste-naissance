@@ -17,7 +17,10 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function home(): Response
     {
-        return $this->render('home/index.html.twig');
+        $semaineGrossesse = (new \DateTime())->diff(new \DateTime('2025-11-10'))->format('%a') / 7;
+        return $this->render('home/index.html.twig', [
+            'semaineGrossesse' => $semaineGrossesse
+        ]);
     }
 
     #[Route('/liste-naissance', name: 'birthlist')]
