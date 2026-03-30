@@ -2,74 +2,218 @@
 {% set currentStatus = app.request.query.get('status') %}
 {% set currentSort = app.request.query.get('sort') %}
 
-<div class="flex flex-col flex-wrap gap-3 mb-8">
-	<div class="flex flex-wrap gap-2 mb-4 items-center">
+<div class="flex flex-col flex-wrap gap-4 mb-8">
+	<div class="flex flex-wrap gap-4 items-center">
 
-		<span class="text-sm font-semibold text-indigo-700 mr-2">
-			Catégorie
-		</span>
+		{# ===== CATEGORY DROPDOWN ===== #}
+		<details class="relative inline-block">
+			<summary class="
+				flex items-center gap-2
+				px-4 py-2
+				rounded-lg
+				bg-white
+				border border-indigo-200
+				text-indigo-700
+				font-semibold
+				text-sm
+				cursor-pointer
+				hover:border-indigo-400
+				transition-colors
+				list-none
+			">
+				Catégorie
+				{% if currentCategory %}
+					<span class="
+						inline-flex items-center justify-center
+						w-5 h-5
+						ml-2
+						text-xs
+						font-bold
+						text-white
+						bg-indigo-500
+						rounded-full
+					">
+						1
+					</span>
+				{% endif %}
+				<span class="ml-1">▼</span>
+			</summary>
 
-		<a href="{{ path('birthlist', app.request.query.all|merge({category: ''})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
-						{% if not currentCategory %} filter-chip-active {% endif %}
-						">
-			Toutes
-		</a>
+			<div class="
+				absolute top-full left-0 mt-2
+				min-w-48
+				bg-white
+				border border-indigo-200
+				rounded-lg
+				shadow-lg
+				z-10
+				overflow-hidden
+			">
+				<a href="{{ path('birthlist', app.request.query.all|merge({category: ''})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="
+					block px-4 py-3
+					text-indigo-700
+					hover:bg-pink-50
+					transition-colors
+					{% if not currentCategory %} bg-indigo-50 font-semibold {% endif %}
+				">
+					Toutes
+				</a>
 
-		{% for cat in categories %}
-			<a href="{{ path('birthlist', app.request.query.all|merge({category: cat.value} )) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
-								 {% if currentCategory == cat.value %} filter-chip-active {% endif %}
-								 ">
-				{{ cat.label() }}
-			</a>
-		{% endfor %}
+				{% for cat in categories %}
+					<a href="{{ path('birthlist', app.request.query.all|merge({category: cat.value})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="
+						block px-4 py-3
+						text-indigo-700
+						hover:bg-pink-50
+						transition-colors
+						{% if currentCategory == cat.value %} bg-indigo-50 font-semibold {% endif %}
+					">
+						{{ cat.label() }}
+					</a>
+				{% endfor %}
+			</div>
+		</details>
 
-	</div>
-	<div class="flex items-center justify-between mb-6 flex-wrap gap-3">
-
-		<div class="flex gap-2 items-center">
-
-			<span class="text-sm font-semibold text-indigo-700">
+		{# ===== AVAILABILITY DROPDOWN ===== #}
+		<details class="relative inline-block">
+			<summary class="
+				flex items-center gap-2
+				px-4 py-2
+				rounded-lg
+				bg-white
+				border border-indigo-200
+				text-indigo-700
+				font-semibold
+				text-sm
+				cursor-pointer
+				hover:border-indigo-400
+				transition-colors
+				list-none
+			">
 				Disponibilité
-			</span>
-			<a href="{{ path('birthlist', app.request.query.all|merge({status: ''})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
-															{{ not currentStatus or currentStatus == '' ? 'filter-chip-active' : '' }}
-								">
-				Tous
-			</a>
-			<a href="{{ path('birthlist', app.request.query.all|merge({status:'available'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
-								{{ currentStatus == 'available' ? 'filter-chip-active' : '' }}
-								">
-				Disponibles
-			</a>
+				{% if currentStatus %}
+					<span class="
+						inline-flex items-center justify-center
+						w-5 h-5
+						ml-2
+						text-xs
+						font-bold
+						text-white
+						bg-indigo-500
+						rounded-full
+					">
+						1
+					</span>
+				{% endif %}
+				<span class="ml-1">▼</span>
+			</summary>
 
-			<a href="{{ path('birthlist', app.request.query.all|merge({status:'booked'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
-								{{ currentStatus == 'booked' ? 'filter-chip-active' : '' }}
-								">
-				Réservés
-			</a>
+			<div class="
+				absolute top-full left-0 mt-2
+				min-w-48
+				bg-white
+				border border-indigo-200
+				rounded-lg
+				shadow-lg
+				z-10
+				overflow-hidden
+			">
+				<a href="{{ path('birthlist', app.request.query.all|merge({status: ''})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="
+					block px-4 py-3
+					text-indigo-700
+					hover:bg-pink-50
+					transition-colors
+					{% if not currentStatus or currentStatus == '' %} bg-indigo-50 font-semibold {% endif %}
+				">
+					Tous
+				</a>
 
-		</div>
+				<a href="{{ path('birthlist', app.request.query.all|merge({status: 'available'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="
+					block px-4 py-3
+					text-indigo-700
+					hover:bg-pink-50
+					transition-colors
+					{% if currentStatus == 'available' %} bg-indigo-50 font-semibold {% endif %}
+				">
+					Disponibles
+				</a>
 
+				<a href="{{ path('birthlist', app.request.query.all|merge({status: 'booked'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="
+					block px-4 py-3
+					text-indigo-700
+					hover:bg-pink-50
+					transition-colors
+					{% if currentStatus == 'booked' %} bg-indigo-50 font-semibold {% endif %}
+				">
+					Réservés
+				</a>
+			</div>
+		</details>
 
-		<div class="flex gap-2 items-center">
-
-			<span class="text-sm font-semibold text-indigo-700">
+		{# ===== SORT DROPDOWN ===== #}
+		<details class="relative inline-block">
+			<summary class="
+				flex items-center gap-2
+				px-4 py-2
+				rounded-lg
+				bg-white
+				border border-indigo-200
+				text-indigo-700
+				font-semibold
+				text-sm
+				cursor-pointer
+				hover:border-indigo-400
+				transition-colors
+				list-none
+			">
 				Trier
-			</span>
+				{% if currentSort and currentSort != 'price_asc' %}
+					<span class="
+						inline-flex items-center justify-center
+						w-5 h-5
+						ml-2
+						text-xs
+						font-bold
+						text-white
+						bg-indigo-500
+						rounded-full
+					">
+						1
+					</span>
+				{% endif %}
+				<span class="ml-1">▼</span>
+			</summary>
 
-			<a href="{{ path('birthlist', app.request.query.all|merge({sort:'price_asc'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
-								{% if not currentSort or currentSort == 'price_asc' %} filter-chip-active {% endif %}
-								">
-				Prix ↑
-			</a>
+			<div class="
+				absolute top-full right-0 mt-2
+				min-w-48
+				bg-white
+				border border-indigo-200
+				rounded-lg
+				shadow-lg
+				z-10
+				overflow-hidden
+			">
+				<a href="{{ path('birthlist', app.request.query.all|merge({sort: 'price_asc'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="
+					block px-4 py-3
+					text-indigo-700
+					hover:bg-pink-50
+					transition-colors
+					{% if not currentSort or currentSort == 'price_asc' %} bg-indigo-50 font-semibold {% endif %}
+				">
+					Prix croissant ↑
+				</a>
 
-			<a href="{{ path('birthlist', app.request.query.all|merge({sort:'price_desc'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="filter-chip
-								{% if currentSort == 'price_desc' %} filter-chip-active {% endif %}
-								">
-				Prix ↓
-			</a>
-
-		</div>
+				<a href="{{ path('birthlist', app.request.query.all|merge({sort: 'price_desc'})) }}" data-turbo-frame="articles-list" data-turbo-action="advance" class="
+					block px-4 py-3
+					text-indigo-700
+					hover:bg-pink-50
+					transition-colors
+					{% if currentSort == 'price_desc' %} bg-indigo-50 font-semibold {% endif %}
+				">
+					Prix décroissant ↓
+				</a>
+			</div>
+		</details>
 
 	</div>
 </div>

@@ -40,5 +40,9 @@ export default class extends Controller {
             labelInput.value = "Cdiscount"
         }
 
+        else if (/bebe9\.com/i.test(url)) {
+            labelInput.value = "Bébé9"
+        }
+
     }
 }
