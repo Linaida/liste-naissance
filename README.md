@@ -3,6 +3,7 @@
 # Fonctionnalités
 ## A Faire
 - Améliorer le tri sur la page d'accueil
+- Administration : ajouter la recherche avec le nom de l'article
 - Faire la page pour afficher un article lorsqu'on clic sur une Card de l'accueil
 - Réaliser le système de réservation d'article
 - Permettre d'ajouter le nom de la personne qui réserve l'article
