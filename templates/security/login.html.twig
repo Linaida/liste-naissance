@@ -1,0 +1,181 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration | Connexion{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen flex items-center justify-center px-4 py-8">
+        <div class="
+            w-full max-w-md
+            p-8
+            flex flex-col
+            text-indigo-700
+            bg-pink-50/95
+            backdrop-blur-md
+            shadow-[0_30px_60px_rgba(0,0,0,0.12)]
+            rounded-3xl
+            border border-white/40
+        ">
+            <h1 class="
+                text-3xl font-bold
+                text-center
+                text-indigo-800
+                mb-8
+            ">
+                Connexion 🔐
+            </h1>
+
+            <form method="post" class="flex flex-col space-y-6">
+                {# ===== ERROR MESSAGE ===== #}
+                {% if error %}
+                    <div class="
+                        p-4
+                        rounded-2xl
+                        bg-red-100/80
+                        border border-red-300
+                        text-red-700
+                        text-sm
+                        backdrop-blur-sm
+                    ">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                {# ===== ALREADY LOGGED IN ===== #}
+                {% if app.user %}
+                    <div class="
+                        p-4
+                        rounded-2xl
+                        bg-green-100/80
+                        border border-green-300
+                        text-green-700
+                        text-sm
+                        backdrop-blur-sm
+                    ">
+                        Vous êtes connecté en tant que <span class="font-semibold">{{ app.user.userIdentifier }}</span>
+                        <br>
+                        <a href="{{ logout_path() }}" class="
+                            font-semibold
+                            hover:underline
+                            hover:text-green-900
+                            transition
+                        ">
+                            Se déconnecter
+                        </a>
+                    </div>
+                {% endif %}
+
+                {# ===== EMAIL ===== #}
+                <div class="flex flex-col">
+                    <label for="username" class="
+                        text-sm font-medium
+                        text-indigo-600
+                        mb-2
+                    ">
+                        Email
+                    </label>
+                    <input 
+                        type="email"
+                        value="{{ last_username }}"
+                        name="_username"
+                        id="username"
+                        autocomplete="email"
+                        required
+                        autofocus
+                        class="
+                            w-full px-4 py-3
+                            rounded-2xl
+                            border border-white/50
+                            bg-white/70
+                            backdrop-blur-sm
+                            text-indigo-800
+                            shadow-inner
+                            placeholder-indigo-300
+                            focus:outline-none
+                            focus:ring-2 focus:ring-indigo-300
+                            focus:border-indigo-300
+                            transition-all duration-200
+                        "
+                        placeholder="votre@email.com"
+                    >
+                </div>
+
+                {# ===== PASSWORD ===== #}
+                <div class="flex flex-col">
+                    <label for="password" class="
+                        text-sm font-medium
+                        text-indigo-600
+                        mb-2
+                    ">
+                        Mot de passe
+                    </label>
+                    <input 
+                        type="password"
+                        name="_password"
+                        id="password"
+                        autocomplete="current-password"
+                        required
+                        class="
+                            w-full px-4 py-3
+                            rounded-2xl
+                            border border-white/50
+                            bg-white/70
+                            backdrop-blur-sm
+                            text-indigo-800
+                            shadow-inner
+                            placeholder-indigo-300
+                            focus:outline-none
+                            focus:ring-2 focus:ring-indigo-300
+                            focus:border-indigo-300
+                            transition-all duration-200
+                        "
+                        placeholder="••••••••"
+                    >
+                </div>
+
+                {# ===== CSRF TOKEN ===== #}
+                <input 
+                    type="hidden"
+                    name="_csrf_token"
+                    data-controller="csrf-protection"
+                    value="{{ csrf_token('authenticate') }}"
+                >
+
+                {# ===== SUBMIT BUTTON ===== #}
+                <button 
+                    type="submit"
+                    class="
+                        w-full py-3
+                        mt-2
+                        text-white font-semibold
+                        rounded-2xl
+                        bg-gradient-to-r from-blue-400 to-indigo-400
+                        shadow-lg
+                        hover:shadow-xl
+                        hover:scale-[1.02]
+                        active:scale-95
+                        transition-all duration-200
+                    "
+                >
+                    Se connecter
+                </button>
+            </form>
+
+            {#
+                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                See https://symfony.com/doc/current/security/remember_me.html
+
+                <div class="flex items-center mt-6 space-x-2">
+                    <input 
+                        type="checkbox"
+                        name="_remember_me"
+                        id="_remember_me"
+                        class="w-4 h-4 rounded border-white/50 bg-white/70 text-indigo-600 focus:ring-2 focus:ring-indigo-300"
+                    >
+                    <label for="_remember_me" class="text-sm text-indigo-600">
+                        Se souvenir de moi
+                    </label>
+                </div>
+            #}
+        </div>
+    </div>
+{% endblock %}
