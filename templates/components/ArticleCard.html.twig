@@ -50,5 +50,20 @@
                 </span>
             {% endif %}
         </div>
+         {% if not article.booked %}
+         <div class="flex justify-center">
+             <button
+                type="button"
+                data-action="reservation#openModal"
+                data-article-id="{{ article.id }}"
+                data-article-name="{{ article.name }}"
+                class="inline-block mt-2 px-4 py-1 text-sm 
+                        text-pink-600 border border-pink-600 rounded-lg
+                       hover:bg-pink-400 hover:text-white cursor-pointer transition-colors duration-300">
+                 Réserver
+             </button>
+             </div>
+        {% endif %}
     </div>
+
 </div>
