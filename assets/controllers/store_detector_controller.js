@@ -20,7 +20,7 @@ export default class extends Controller {
 
         const url = urlInput.value
 
-        if (/amazon\./i.test(url)) {
+        if (/(?:amazon|amzn)\./i.test(url)) {
             labelInput.value = "Amazon"
         }
 
