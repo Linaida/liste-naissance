@@ -25,7 +25,7 @@
     </div>
 
     {# CONTENT #}
-    <div class="p-5 space-y-2">
+    <div class="p-4 space-y-2">
         <h3 class="font-semibold text-gray-800">
             {{ article.name }}
         </h3>
@@ -50,7 +50,10 @@
                 </span>
             {% endif %}
         </div>
-         {% if not article.booked %}
+         
+    </div>
+    <div>
+    {% if not article.booked %}
          <div class="flex justify-center">
              <button
                 type="button"
@@ -63,6 +66,19 @@
                  Réserver
              </button>
              </div>
+             {% else %}
+                <div class="flex justify-center">
+                    <button
+                        type="button"
+                        data-action="reservation#openCancelModal"
+                        data-article-id="{{ article.id }}"
+                        data-article-name="{{ article.name }}"
+                        class="inline-block mt-2 px-4 py-1 text-sm 
+                                text-orange-400 border border-orange-400 rounded-lg
+                                cursor-pointer">
+                        Annuler la réservation
+                    </button>
+                </div>
         {% endif %}
     </div>
 

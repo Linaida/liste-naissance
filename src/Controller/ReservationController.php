@@ -67,4 +67,58 @@ class ReservationController extends AbstractController
             ], 500);
         }
     }
+
+    #[Route('/cancel', name: 'cancel', methods: ['POST'])]
+    public function cancel(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): JsonResponse {
+        try {
+            $data = json_decode($request->getContent(), true);
+
+            // Validation
+            if (empty($data['articleId']) || empty($data['email'])) {
+                return $this->json([
+                    'error' => 'Missing required fields: articleId and email',
+                ], 400);
+            }
+
+            // Valider le format de l'email
+            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                return $this->json([
+                    'error' => 'Invalid email format',
+                ], 400);
+            }
+
+            // Récupérer la réservation
+            $reservation = $entityManager->getRepository(Reservation::class)->findOneBy([
+                'article' => $data['articleId'],
+                'email' => $data['email']
+            ]);
+
+            if (!$reservation) {
+                return $this->json([
+                    'error' => 'Reservation not found',
+                ], 404);
+            }
+
+            // Supprimer la réservation
+
+            $article = $reservation->getArticle();
+            $article->setBooked(false);
+            $entityManager->persist($article);
+            $entityManager->remove($reservation);
+            $entityManager->flush();
+
+            return $this->json([
+                'success' => true,
+                'message' => 'Reservation cancelled successfully',
+            ], 200);
+
+        } catch (\Exception $e) {
+            return $this->json([
+                'error' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }
