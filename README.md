@@ -7,7 +7,7 @@
 ## A Faire
 
 - Améliorer le tri sur la page d'accueil
-- Faire un logo pour l'application
+
 
 ## Fait
 - Administration : ajouter, modifier et supprimer un article
@@ -22,3 +22,4 @@
 - Afficher les liens vers les plateformesde vente en ligne
 - Administration : Indiquer la date de début de grossesse et d'accouchement pour calculer automatiquement les semaines de grossesse
 - Administration : Faire une page pour ajouter des infos sur bébé ( ex : taille )
+- Faire un logo pour l'application
