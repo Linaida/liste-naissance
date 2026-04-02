@@ -1,4 +1,4 @@
-<div class="form-article mx-auto mt-2">
+<div data-controller="articles" class="form-article mx-auto mt-2">
 	<div class="
 			p-6
 			flex flex-col
@@ -19,29 +19,50 @@
 
 			{# ===== NAME ===== #}
 			<div class="flex flex-col">
-				{{ form_label(form.name, null, {
-                    label_attr: { class: 'text-sm font-medium text-indigo-600 mb-2' }
-                }) }}
+				<div class="flex items-center justify-between gap-4">
+					<div class="flex-1">
+						{{ form_label(form.name, null, {
+                            label_attr: { class: 'text-sm font-medium text-indigo-600 mb-2' }
+                        }) }}
 
-				{{ form_widget(form.name, {
-                    attr: {
-                        class: '
-                            w-full px-2 py-2
-                            rounded-2xl
-                            border border-white/50
-                            bg-white/70
-                            backdrop-blur-sm
-                            text-indigo-800
-                            shadow-inner
-                            focus:outline-none
-                            focus:ring-2 focus:ring-indigo-300
-                            focus:border-indigo-300
-                            transition-all duration-200
-                        '
-                    }
-                }) }}
+						{{ form_widget(form.name, {
+                            attr: {
+                                class: '
+                                    w-full px-2 py-2
+                                    rounded-2xl
+                                    border border-white/50
+                                    bg-white/70
+                                    backdrop-blur-sm
+                                    text-indigo-800
+                                    shadow-inner
+                                    focus:outline-none
+                                    focus:ring-2 focus:ring-indigo-300
+                                    focus:border-indigo-300
+                                    transition-all duration-200
+                                ',
+                                'data-articles-target' : 'articleName'
+                            }
+                        }) }}
 
-				{{ form_errors(form.name) }}
+						{{ form_errors(form.name) }}
+					</div>
+					<button 
+						type="button"e
+						data-action="articles#generateSearchLinks"
+						class="mt-7 px-4 py-2
+							text-sm font-medium text-white
+							rounded-2xl
+							bg-gradient-to-r from-purple-400 to-pink-400
+							shadow-md
+							hover:shadow-lg
+							hover:scale-105
+							active:scale-95
+							transition-all duration-200
+							whitespace-nowrap
+						">
+						🔗 Générer les liens
+					</button>
+				</div>
 			</div>
 			{# ===== PRIX ===== #}
 			<div>
@@ -125,7 +146,7 @@
 			</div>
 
 			{# ===== LINKS ===== #}
-			<div data-controller="articles store-detector">
+			<div data-controller="store-detector">
 				<h3 class="text-sm font-medium text-indigo-600 mb-4">
 					Liens vers les boutiques 🔗
 				</h3>
