@@ -10,6 +10,7 @@ parameters:
     uploads_directory: '%kernel.project_dir%/public/uploads/articles'
     email_from: '%env(MAILER_FROM_EMAIL)%'
     email_from_name: '%env(MAILER_FROM_NAME)%'
+    admin_emails: '%env(ADMIN_EMAIL)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -26,3 +27,4 @@ services:
         arguments:
             $fromEmail: '%email_from%'
             $fromName: '%email_from_name%'
+            $adminEmails: '%admin_emails%'
