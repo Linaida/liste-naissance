@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Repository\ArticleRepository;
+use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,6 +19,7 @@ class ReservationController extends AbstractController
         Request $request,
         ArticleRepository $articleRepository,
         EntityManagerInterface $entityManager,
+        EmailService $emailService,
     ): JsonResponse {
         try {
             $data = json_decode($request->getContent(), true);
@@ -55,6 +57,9 @@ class ReservationController extends AbstractController
             $entityManager->persist($reservation);
             $entityManager->flush();
 
+            // Envoyer l'email de confirmation
+            $emailService->sendReservationConfirmation($reservation);
+
             return $this->json([
                 'success' => true,
                 'message' => 'Reservation created successfully',
@@ -71,7 +76,8 @@ class ReservationController extends AbstractController
     #[Route('/cancel', name: 'cancel', methods: ['POST'])]
     public function cancel(
         Request $request,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        EmailService $emailService
     ): JsonResponse {
         try {
             $data = json_decode($request->getContent(), true);
@@ -102,8 +108,10 @@ class ReservationController extends AbstractController
                 ], 404);
             }
 
-            // Supprimer la réservation
+            // Envoyer l'email d'annulation avant de supprimer
+            $emailService->sendReservationCancellation($reservation);
 
+            // Supprimer la réservation
             $article = $reservation->getArticle();
             $article->setBooked(false);
             $entityManager->persist($article);

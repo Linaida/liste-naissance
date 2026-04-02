@@ -8,6 +8,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     uploads_directory: '%kernel.project_dir%/public/uploads/articles'
+    email_from: '%env(MAILER_FROM_EMAIL)%'
+    email_from_name: '%env(MAILER_FROM_NAME)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -19,5 +21,8 @@ services:
     App\:
         resource: '../src/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    # Configuration du service EmailService
+    App\Service\EmailService:
+        arguments:
+            $fromEmail: '%email_from%'
+            $fromName: '%email_from_name%'
