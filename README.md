@@ -6,7 +6,7 @@
   
 ## A Faire
 
-- Améliorer le tri sur la page d'accueil
+- Faire un Dockerfile pour construire l'image à déployer en production
 
 
 ## Fait
@@ -23,3 +23,4 @@
 - Administration : Indiquer la date de début de grossesse et d'accouchement pour calculer automatiquement les semaines de grossesse
 - Administration : Faire une page pour ajouter des infos sur bébé ( ex : taille )
 - Faire un logo pour l'application
+- Envoie de mail lorsqu'il y a une réservation
