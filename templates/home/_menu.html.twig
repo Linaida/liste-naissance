@@ -30,40 +30,44 @@
             >
                 Liste de naissance
             </a>
-            {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
-            <a
-                href="{{ path('articles_list') }}"
-                class="
-                    px-4 py-2 rounded-full text-sm font-semibold transition
-                    {{ app.request.attributes.get('_route') == 'articles_list'
-                        ? 'bg-indigo-500 text-white shadow'
-                        : 'text-indigo-700 hover:bg-indigo-100'
-                    }}
-                "
-            >
-                Gérer les articles
-            </a>
-            {% endif %}
 
         </div>
 
         {# Bouton Admin à droite #}
-        <div class="ml-auto">
+        <div class="ml-auto flex items-center gap-4">
 
+            {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+                <a
+                    href="{{ path('app_administration') }}"
+                    class="
+                        px-4 py-2 rounded-full text-sm font-semibold transition
+                        {{ app.request.attributes.get('_route') == 'app_administration'
+                      ? 'bg-pink-500 text-white shadow'
+                      : 'text-pink-700 hover:bg-pink-200'
+                    }}
+                    "
+                >
+                    ⚙️ Administration
+                </a>
+            {% endif %}
+            
             <a
                 href="{{ (app.user and 'ROLE_ADMIN' in app.user.roles) ? path('articles_list') : path('app_login') }}"
                 class="
                     px-4 py-2 rounded-full text-sm font-semibold transition
-                    text-pink-700 hover:bg-pink-200
+                      {{ app.request.attributes.get('_route') == 'articles_list'
+                      ? 'bg-pink-500 text-white shadow'
+                      : 'text-pink-700 hover:bg-pink-200'
+                    }}
                 "
             >
-                ⚙ Admin
+                📋 Gestion Articles
             </a>
             {% if app.user %}
                 <a
                     href="{{ path('app_logout') }}"
                     class="
-                        ml-4 px-4 py-2 rounded-full text-sm font-semibold transition
+                        px-4 py-2 rounded-full text-sm font-semibold transition
                         text-red-700 hover:bg-red-200
                     "
                 >
