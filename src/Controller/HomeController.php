@@ -7,6 +7,7 @@ use App\DTO\OrderDTO;
 use App\DTO\PaginationDTO;
 use App\Enum\ArticleCategory;
 use App\Repository\ArticleRepository;
+use App\Repository\PregnancyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +16,13 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function home(): Response
+    public function home(PregnancyRepository $pregnancyRepository): Response
     {
-        $semaineGrossesse = (new \DateTime())->diff(new \DateTime('2025-11-10'))->format('%a') / 7;
+        $pregnancy = $pregnancyRepository->find(2); // Example ID, replace with actual logic
+        $semaineGrossesse = (new \DateTime())->diff($pregnancy->getStartDate())->format('%a') / 7;
         return $this->render('home/index.html.twig', [
-            'semaineGrossesse' => $semaineGrossesse
+            'semaineActuelle' => $semaineGrossesse,
+            'termePrevu' => $pregnancy->getEndDate()->format('Y-m-d'),
         ]);
     }
 

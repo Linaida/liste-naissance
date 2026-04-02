@@ -16,16 +16,10 @@
 							<p class="text-lg italic">Où en sommes-nous
 							</p>
 							<p>
-								Semaine de grossesse :
-								<span class="font-bold">{{ semaineGrossesse|round }} semaines</span>
-							</p>
+								Semaine : <span class="font-bold">{{ semaineActuelle|round }}</span>
+							</P>
 							<p>
-								Taille estimée du bébé :
-								<span class="font-bold">24 cm</span>
-							</p>
-							<p>
-								Poids estimé du bébé :
-								<span class="font-bold">300 gr</span>
+								Terme prévu pour le <span class="font-bold">{{ termePrevu|date('d/m/Y') }}</span>
 							</p>
 						</div>
 					</twig:Card:Content>
