@@ -3,13 +3,10 @@
 # Fonctionnalités
 
 ## WIP
-- 
   
 ## A Faire
 
 - Améliorer le tri sur la page d'accueil
-- Administration : Indiquer la date de début de grossesse et d'accouchement pour calculer automatiquement les semaines de grossesse
-- Administration : Faire une page pour ajouter des infos sur bébé ( ex : taille )
 - Faire un logo pour l'application
 
 ## Fait
@@ -23,3 +20,5 @@
 - Permettre d'ajouter le nom de la personne qui réserve l'article
 - Administration : ajouter la recherche avec le nom de l'article
 - Afficher les liens vers les plateformesde vente en ligne
+- Administration : Indiquer la date de début de grossesse et d'accouchement pour calculer automatiquement les semaines de grossesse
+- Administration : Faire une page pour ajouter des infos sur bébé ( ex : taille )

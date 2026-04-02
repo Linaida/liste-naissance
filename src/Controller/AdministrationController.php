@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Pregnancy;
 use App\Entity\Store;
-use App\Entity\User;
 use App\Form\Type\PregnancyType;
 use App\Form\Type\StoreType;
 use App\Form\Type\UserType;
