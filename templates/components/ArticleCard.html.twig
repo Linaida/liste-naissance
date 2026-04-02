@@ -52,6 +52,25 @@
         </div>
          
     </div>
+    {# Liens vers les plateformes de vente en ligne #}    
+    <div>
+    {% if article.links is not empty %}
+        <div class="px-4 pb-4">
+            <h4 class="text-sm font-medium text-gray-600 mb-2">
+                Où acheter ? 🛒
+            </h4>
+            <div class="flex flex-wrap gap-2">
+                {% for link in article.links %}
+                    <a href="{{ link.url }}" target="_blank" class="inline-block px-3 py-1 text-sm 
+                            text-indigo-600 border 
+                            hover:bg-indigo-400 hover:text-white transition-colors duration-300">
+                        {{ link.label }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    </div>
     <div>
     {% if not article.booked %}
          <div class="flex justify-center">
