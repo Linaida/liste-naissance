@@ -152,4 +152,13 @@ final class ArticleController extends AbstractController
             'articles' => $articles
         ]);
     }
+
+    #[Route('/articles/{id}/reservations', name: 'articles_show_reservations', methods: ['GET'])]
+    public function showReservations(Article $article): Response
+    {
+        return $this->render('article/_reservations_modal.html.twig', [
+            'article' => $article,
+            'reservations' => $article->getReservations(),
+        ]);
+    }
 }

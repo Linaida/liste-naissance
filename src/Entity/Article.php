@@ -43,9 +43,13 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: ArticleLink::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $links;
 
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Reservation::class, cascade: ['remove'], orphanRemoval: true)]
+    private Collection $reservations;
+
     public function __construct()
     {
         $this->links = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,6 +165,32 @@ class Article
     public function setBooked(bool $booked): static
     {
         $this->booked = $booked;
+
+        return $this;
+    }
+
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            if ($reservation->getArticle() === $this) {
+                $reservation->setArticle(null);
+            }
+        }
 
         return $this;
     }
