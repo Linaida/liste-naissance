@@ -6,16 +6,17 @@ variables:
 
 build:
   stage: build
-  image: docker:24
+  image: docker:cli
   services:
-    - docker:24-dind
+    - docker:dind
 
   variables:
     DOCKER_HOST: tcp://docker:2375/
     DOCKER_TLS_CERTDIR: ""
+    DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE/babylist
 
   before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
   script:
     # Build
